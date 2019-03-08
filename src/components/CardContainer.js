@@ -1,8 +1,11 @@
 import React from 'react';
 
-const CardContainer = () => {
+const CardContainer = (props) => {
+  const {children} = props;
+  console.log(children);
   return (
     <div>
+      {children}
     </div>
   )
 }

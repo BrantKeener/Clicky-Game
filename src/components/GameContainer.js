@@ -79,13 +79,11 @@ class GameContainer extends Component {
         <Score />
         <CardContainer> 
           {this.state.cards.map((card) => {
-            console.log(card.name);
             return (
               <Card 
                 key={card.key}
                 src={card.src}
-                name={card.name}>  
-              </Card>
+                name={card.name} />  
             )
           })}
         </CardContainer>
