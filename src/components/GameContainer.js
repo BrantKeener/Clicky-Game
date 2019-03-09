@@ -4,86 +4,128 @@ import Score from './Score';
 import CardContainer from './CardContainer';
 import Card from './Card';
 
+  // Fisher Yates for the shuffle
+  const shuffleArray = (array) => {
+    let currentIndex = array.length;
+    let temporaryValue = '';
+    let randomIndex = '';
+
+    while(currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  }
+
 class GameContainer extends Component {
-  
+
   state = {
     cards: [
       {
         name: 'amos',
         src: './images/Amos.PNG',
-        key: 0
+        id: 0
       },
       {
         name: 'Chrisjen',
         src: './images/Chrisjen.PNG',
-        key: 1
+        id: 1
       },
       {
         name: 'Draper',
         src: './images/Draper.PNG',
-        key: 2
+        id: 2
       },
       {
         name: 'Fred Johnson',
         src: './images/Fred_Johnson.PNG',
-        key: 3
+        id: 3
       },
       {
         name: 'Holden',
         src: './images/Holden.PNG',
-        key: 4
+        id: 4
       },
       {
         name: 'Jump',
         src: './images/Jump.PNG',
-        key: 5
+        id: 5
       },
       {
         name: 'Kamal',
         src: './images/Kamal.PNG',
-        key: 6
+        id: 6
       },
       {
         name: 'Miller_Gun',
         src: './images/Miller_Gun.PNG',
-        key: 7
+        id: 7
       },
       {
         name: 'Miller',
         src: './images/Miller.PNG',
-        key: 8
+        id: 8
       },
       {
         name: 'Monster',
         src: './images/Monster.PNG',
-        key: 9
+        id: 9
       },
       {
         name: 'Naomi',
         src: './images/Naomi.PNG',
-        key: 10
+        id: 10
       },
       {
         name: 'Roci',
         src: './images/Roci.PNG',
-        key: 11
+        id: 11
       }
-    ]
+    ],
+    guessed: [],
+    score: 0,
+    highScore: 0
   }
 
+  handleClick = (event) => {
+    const { id } = event.target;
+    const guessedArray = this.state.guessed;
+    let score = this.state.score;
+    let highScore = this.state.highScore;
+    if(guessedArray.includes(id)) {
+      this.setState({ guessed: [] })
+      this.setState({ score: 0 })
+    } else {
+      guessedArray.push(id);
+      score++;
+      const adjustHigh = (highScore > score) ? highScore : score;
+      const array = shuffleArray(this.state.cards);
+      this.setState({ cards: array });
+      this.setState({ guessed: guessedArray });
+      this.setState({ score: score });
+      this.setState({ highScore: adjustHigh });
+    };
+  }
 
   render() {
     return(
       <div>
         <Header />
-        <Score />
+        <Score 
+          score={this.state.score}
+          highScore={this.state.highScore}/>
         <CardContainer> 
-          {this.state.cards.map((card) => {
+          {shuffleArray(this.state.cards).map((card) => {
             return (
-              <Card 
-                key={card.key}
+              <Card key={card.id}
+                id ={card.id}
                 src={card.src}
-                name={card.name} />  
+                name={card.name} 
+                onClick = {this.handleClick}/>  
             )
           })}
         </CardContainer>

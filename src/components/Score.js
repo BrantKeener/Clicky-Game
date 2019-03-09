@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Score = () => {
+const Score = ({ score, highScore }) => {
   return (
   <div>
-    <h1>Your Score: 0 || High Score: 0</h1>
+    <h1>Your Score: {score} || High Score: {highScore}</h1>
   </div>
   );
 }

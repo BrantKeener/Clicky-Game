@@ -3,10 +3,9 @@ import React from 'react';
 // An object that stores the various images of our cards, and gives them an id.
 
 
-const Card = ({ name, key, src }) => {
-  console.log(name);
+const Card = ({ name, id, src, onClick }) => {
   return (
-    <img src={src} alt={name} key={key}></img>
+    <img src={src} id={id} alt={name} onClick={onClick}></img>
   )
 }
 
