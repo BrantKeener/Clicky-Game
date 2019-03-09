@@ -4,23 +4,6 @@ import Score from './Score';
 import CardContainer from './CardContainer';
 import Card from './Card';
 
-  // Fisher Yates for the shuffle
-  const shuffleArray = (array) => {
-    let currentIndex = array.length;
-    let temporaryValue = '';
-    let randomIndex = '';
-
-    while(currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
-
 class GameContainer extends Component {
 
   state = {
@@ -89,26 +72,51 @@ class GameContainer extends Component {
     guessed: [],
     score: 0,
     highScore: 0
-  }
+  };
 
   handleClick = (event) => {
     const { id } = event.target;
     const guessedArray = this.state.guessed;
-    let score = this.state.score;
-    let highScore = this.state.highScore;
     if(guessedArray.includes(id)) {
-      this.setState({ guessed: [] })
-      this.setState({ score: 0 })
+      this.duplicateGuess();
     } else {
       guessedArray.push(id);
-      score++;
-      const adjustHigh = (highScore > score) ? highScore : score;
-      const array = shuffleArray(this.state.cards);
-      this.setState({ cards: array });
-      this.setState({ guessed: guessedArray });
-      this.setState({ score: score });
-      this.setState({ highScore: adjustHigh });
+      this.uniqueGuess(guessedArray);
     };
+  };
+
+  uniqueGuess = (guessedArray) => {
+    const array = this.shuffleArray(this.state.cards);
+    let score = this.state.score;
+    let highScore = this.state.highScore;
+    score++;
+    const adjustHigh = (highScore > score) ? highScore : score;
+    this.setState({ cards: array });
+    this.setState({ guessed: guessedArray });
+    this.setState({ score: score });
+    this.setState({ highScore: adjustHigh });
+  }
+
+  duplicateGuess = () => {
+    this.setState({ guessed: [] });
+    this.setState({ score: 0 });
+  }
+
+  // Fisher Yates for the shuffle
+  shuffleArray = (array) => {
+    let currentIndex = array.length;
+    let temporaryValue = '';
+    let randomIndex = '';
+
+    while(currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 
   render() {
@@ -119,22 +127,19 @@ class GameContainer extends Component {
           score={this.state.score}
           highScore={this.state.highScore}/>
         <CardContainer> 
-          {shuffleArray(this.state.cards).map((card) => {
+          {this.shuffleArray(this.state.cards).map((card) => {
             return (
               <Card key={card.id}
                 id ={card.id}
                 src={card.src}
                 name={card.name} 
                 onClick = {this.handleClick}/>  
-            )
-          })}
+            );
+          })};
         </CardContainer>
       </div>
     );
-  }
-
+  };
 };
-
-
 
 export default GameContainer;
