@@ -10,17 +10,9 @@ The user is immediately greeted with a modal that gives them a rundown on how to
 
 ![Opening Instructions](public/images/captures/opening_instructions.png)
 
-In addition, when win (12 cards correctly guessed), or loss (a card is picked twice) conditions are met, the user will be greeted with a gif as demonstrated below:
-
-![win](public/images/captures/win.gif)
-*Win conditions met*
-
-![loss](public/images/captures/loss.gif)
-*Loss conditions met*
-
 ## Motivation
 
-Creating **Clicky-Game** allowed for exploration of Node.js interfacing with an SQL database.
+Creating **Clicky-Game** allowed for an initial exposure to React, and state, and how to interact with both.
 
 ## Build Status
 
@@ -32,43 +24,31 @@ Standard
 
 ## Demo
 
-To view the demonstration video, please go to https://brantkeener.github.io/Backend-Demos/
+In addition, when win (12 cards correctly guessed), or loss (a card is picked twice) conditions are met, the user will be greeted with a gif as demonstrated below:
+
+![win](public/images/captures/win.gif)
+*Win Gif*
+
+![loss](public/images/captures/loss.gif)
+*Loss Gif*
 
 ## Tech/framework Used
 
-Built utilizing mySQL workbench, and Node.js including the following npm:
-1. inquirer
-2. mysql
-3. easy-table
+Built utilizing React!
+![React Logo](src/logo.svg)
 
 ## Features
 
-Clicky-Game requires a fair amount of user interaction, and thus required extensive answer validation. It also includes some redundant checks during manager database updating to ensure that data is entered correctly. Commentary to the user helps to ensure that they don't run into a situation where they've triggered an error, but they don't know why, or how to move forward. Well-designed custom tables in both the customer and manager section, as well as easy-table in the supervisor login allow the user to quickly glean the pertinent information on the screen.
+Clicky-Game features a fun card-flipping animation with rich backgrounds, and a color palette derived from the universe of The Expanse. All cards are related to the show's characters, with gifs pulled from [Giphy](https://giphy.com/) to help give the app an even more game-like feel. The game monitor's user's current and high schores for this session. The app also montiors the cards such that if a duplicate card is chosen, a loss condition is thrown, while if 12 correct cards are chosen wihtout duplication, a win condition is thrown.
 
 ## Installation
 
-Perform either a clone or a fork by visiting [bamazon](https://github.com/BrantKeener/bamazon). This will give you access to everything except the **.env** file. The **.env** file contains the following information laid out exactly as written:
-
-**====================**
-# Database password
-
-products_pass = {database-password for the database you will use}
-
-**====================**
-
-The user must provide their own database password, and their own database.
-
-The user then needs to install the appropriate npm files, which are included in the package.json as dependencies. Perform an npm install, and you are ready! You may also perform the following installs manually if you choose:
-1. inquirer
-2. dotenv
-3. mysql
-4. easy-table
+Perform either a clone or a fork by visiting [Clicky-Game](https://github.com/BrantKeener/Clicky-Game). This will give you access to everything you need.
 
 ## How to Use
 
-After installation, launch your favorite terminal, head over to the folder the project is installed into, and run node bamazonCustomer.js, bamazonManager.js, or bamazonSupervisor.js.
-The user will immediately be greeted, and a table, or menu will appear depending on the chosen login. Navigate the menus following the prompts as needed.
-The manager, and supervisor levels do have "Exit" options in the menu, while a user must reach checkout to exit.
+Play the Game: All you need to do to play the game is head over to [The Expanse Clicky-Game](https://brantkeener.github.io/Clicky-Game/).
+Develop: Perform the above installation instructions.
 
 ## Credits
 
