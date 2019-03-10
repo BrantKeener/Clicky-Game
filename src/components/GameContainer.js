@@ -3,7 +3,6 @@ import Header from './Header';
 import Score from './Score';
 import CardContainer from './CardContainer';
 import Card from './Card';
-import StartButton from './StartButton'
 import Modal from './Modal';
 
 class GameContainer extends Component {
@@ -74,8 +73,7 @@ class GameContainer extends Component {
     guessed: [],
     score: 0,
     highScore: 0,
-    modalType: '',
-    modalDisplay: false
+    startModal: true,
   };
 
   handleClick = (event) => {
@@ -89,8 +87,7 @@ class GameContainer extends Component {
         this.uniqueGuess(guessedArray);
       };
     } else if(id === 'start') {
-      const start = document.getElementById(id);
-      start.disabled = true;
+      this.showModal();
       this.imageFlipToggle();
     }
   };
@@ -103,6 +100,7 @@ class GameContainer extends Component {
     const adjustHigh = (highScore > score) ? highScore : score;
     this.imageFlipToggle();
     setTimeout(() => {
+      this.setState({ startModal: false });
       this.setState({ cards: array });
       this.setState({ guessed: guessedArray });
       this.setState({ score: score });
@@ -116,13 +114,20 @@ class GameContainer extends Component {
   duplicateGuess = () => {
     this.setState({ guessed: [] });
     this.setState({ score: 0 });
+    this.imageFlipToggle();
+    this.showModal();
+  }
+
+  showModal = () => {
+    const modal = document.getElementById('modal-bg');
+    modal.classList.toggle('modal-hide');
   }
 
   imageFlipToggle = () => {
     const card = document.getElementsByClassName('flip-card-inner');
     const imgArray = [...card];
     imgArray.forEach((element) => {
-      element.classList.toggle('splode')
+      element.classList.toggle('flip-to-back')
     });
   };
 
@@ -145,13 +150,12 @@ class GameContainer extends Component {
 
   render() {
     return(
-      <div>
+      <div id='game-container'>
+        <Modal choice={this.state.startModal} startClick={this.handleClick}/>
         <Header />
-        <Modal choice={this.state.modalType} />
         <Score 
           score = {this.state.score}
           highScore = {this.state.highScore}/>
-        <StartButton onClick = {this.handleClick}/>
         <CardContainer> 
           {this.shuffleArray(this.state.cards).map((card) => {
             return (
