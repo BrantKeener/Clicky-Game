@@ -1,7 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**Note: If you would like to see a demo, go here: https://brantkeener.github.io/Backend-Demos/**
-
 # Clicky-Game
 *A react memory app that requires the user to click unique pictures.*
 
