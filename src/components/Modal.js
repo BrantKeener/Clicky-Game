@@ -7,12 +7,12 @@ const Modal = (props) => {
       <div id='modal'>
         {props.choice ? 
         <div id='instructions-opening'>
-        <p>The crew of the Roci are in trouble. It is up to you to help them out. By clicking on the cards, you are either:</p>
+        <p>The crew of the Roci are in trouble. It is up to you to help them out.</p>
         <ol id='instruction-list'>
-          <li>Rescuing Crew Members</li>
-          <li>Incinerating Protomolucule Mutants</li>
+          <li>There are 12 unique cards.</li>
+          <li>Click a card once and only once.</li>
         </ol>
-        <p>However, you must not click the same card twice. This will give away the Roci's position, and open the crew to retaliation.</p>
+        <p>If you click the same card twice, you will lose, however if you are able to sequentially pick all 12 cards without any repetition, you win!</p>
         <p>Good Luck!</p>
         </div>
         : (props.winScore === 12 ? 
