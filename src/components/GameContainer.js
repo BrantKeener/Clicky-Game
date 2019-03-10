@@ -89,7 +89,10 @@ class GameContainer extends Component {
     } else if(id === 'start') {
       this.showModal();
       this.imageFlipToggle();
-    }
+      if(this.state.startModal === false) {
+        this.reset();
+      };
+    };
   };
 
   uniqueGuess = (guessedArray) => {
@@ -109,6 +112,17 @@ class GameContainer extends Component {
         this.imageFlipToggle();
       }, 500);
     }, 700);
+    if(score === 12) {
+      this.imageFlipToggle();
+      setTimeout(() => {
+        this.showModal()
+      }, 1000);
+    }
+  };
+
+  reset = () => {
+    this.setState({ guessed: [] });
+    this.setState({ score: 0 });
   }
 
   duplicateGuess = () => {
@@ -116,12 +130,12 @@ class GameContainer extends Component {
     this.setState({ score: 0 });
     this.imageFlipToggle();
     this.showModal();
-  }
+  };
 
   showModal = () => {
     const modal = document.getElementById('modal-bg');
     modal.classList.toggle('modal-hide');
-  }
+  };
 
   imageFlipToggle = () => {
     const card = document.getElementsByClassName('flip-card-inner');
@@ -151,7 +165,7 @@ class GameContainer extends Component {
   render() {
     return(
       <div id='game-container'>
-        <Modal choice={this.state.startModal} startClick={this.handleClick}/>
+        <Modal winScore={this.state.score} choice={this.state.startModal} startClick={this.handleClick}/>
         <Header />
         <Score 
           score = {this.state.score}
@@ -159,11 +173,11 @@ class GameContainer extends Component {
         <CardContainer> 
           {this.shuffleArray(this.state.cards).map((card) => {
             return (
-              <Card key = {card.id}
-                id = {card.id}
-                src = {card.src}
-                name = {card.name} 
-                onClick = {this.handleClick}/>  
+              <Card key={card.id}
+                id={card.id}
+                src={card.src}
+                name={card.name} 
+                onClick={this.handleClick}/>  
             )
           })}
         </CardContainer>

@@ -8,7 +8,3 @@ const App = () => {
 };
 
 export default App;
-
-// TODO add loss animations
-// TODO add win animation/modal
-// Add css styling
