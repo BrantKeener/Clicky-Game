@@ -10,6 +10,13 @@ The user is immediately greeted with a modal that gives them a rundown on how to
 
 ![Opening Instructions](public/images/captures/opening_instructions.png)
 
+In addition, when win (12 cards correctly guessed), or loss (a card is picked twice) conditions are met, the user will be greeted with a gif as demonstrated below:
+
+![win](public/images/captures/win.gif)
+*Win conditions met*
+
+![loss](public/images/captures/loss.gif)
+*Loss conditions met*
 
 ## Motivation
 
