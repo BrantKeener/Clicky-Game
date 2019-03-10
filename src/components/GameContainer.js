@@ -3,6 +3,8 @@ import Header from './Header';
 import Score from './Score';
 import CardContainer from './CardContainer';
 import Card from './Card';
+import StartButton from './StartButton'
+import Modal from './Modal';
 
 class GameContainer extends Component {
 
@@ -71,18 +73,26 @@ class GameContainer extends Component {
     ],
     guessed: [],
     score: 0,
-    highScore: 0
+    highScore: 0,
+    modalType: '',
+    modalDisplay: false
   };
 
   handleClick = (event) => {
     const { id } = event.target;
-    const guessedArray = this.state.guessed;
-    if(guessedArray.includes(id)) {
-      this.duplicateGuess();
-    } else {
-      guessedArray.push(id);
-      this.uniqueGuess(guessedArray);
-    };
+    if(id !== 'start') {
+      const guessedArray = this.state.guessed;
+      if(guessedArray.includes(id)) {
+        this.duplicateGuess();
+      } else {
+        guessedArray.push(id);
+        this.uniqueGuess(guessedArray);
+      };
+    } else if(id === 'start') {
+      const start = document.getElementById(id);
+      start.disabled = true;
+      this.imageFlipToggle();
+    }
   };
 
   uniqueGuess = (guessedArray) => {
@@ -91,16 +101,30 @@ class GameContainer extends Component {
     let highScore = this.state.highScore;
     score++;
     const adjustHigh = (highScore > score) ? highScore : score;
-    this.setState({ cards: array });
-    this.setState({ guessed: guessedArray });
-    this.setState({ score: score });
-    this.setState({ highScore: adjustHigh });
+    this.imageFlipToggle();
+    setTimeout(() => {
+      this.setState({ cards: array });
+      this.setState({ guessed: guessedArray });
+      this.setState({ score: score });
+      this.setState({ highScore: adjustHigh });
+      setTimeout(() => {
+        this.imageFlipToggle();
+      }, 500);
+    }, 700);
   }
 
   duplicateGuess = () => {
     this.setState({ guessed: [] });
     this.setState({ score: 0 });
   }
+
+  imageFlipToggle = () => {
+    const card = document.getElementsByClassName('flip-card-inner');
+    const imgArray = [...card];
+    imgArray.forEach((element) => {
+      element.classList.toggle('splode')
+    });
+  };
 
   // Fisher Yates for the shuffle
   shuffleArray = (array) => {
@@ -123,19 +147,21 @@ class GameContainer extends Component {
     return(
       <div>
         <Header />
+        <Modal choice={this.state.modalType} />
         <Score 
-          score={this.state.score}
-          highScore={this.state.highScore}/>
+          score = {this.state.score}
+          highScore = {this.state.highScore}/>
+        <StartButton onClick = {this.handleClick}/>
         <CardContainer> 
           {this.shuffleArray(this.state.cards).map((card) => {
             return (
-              <Card key={card.id}
-                id ={card.id}
-                src={card.src}
-                name={card.name} 
+              <Card key = {card.id}
+                id = {card.id}
+                src = {card.src}
+                name = {card.name} 
                 onClick = {this.handleClick}/>  
-            );
-          })};
+            )
+          })}
         </CardContainer>
       </div>
     );
